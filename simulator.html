@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>家国梦模拟器</title>
+	<link rel="stylesheet" href="css/style.css">
+	
+</head>
+<body>
+	<header>
+		<h1>家国梦数值模拟器</h1>
+		<img src="images/logo.png" alt="EMPTY">
+	</header>
+	<div class="content">
+		<main class="main">
+			<div class="itemblocks">
+				<table>
+					<tr class="row">
+						<td class="col">
+							<h1>工业栏</h1>
+						</td>
+						<td class="col">
+							<div id='r1c1' class="itemblock">
+								<img src="images/icon/buildings.png" alt="EMPTY">
+
+							</div>
+						</td>
+						<td class="col">
+							<div id='r1c2' class="itemblock">
+								<img src="images/icon/buildings.png" alt="EMPTY">
+							</div>
+						</td>
+						<td class="col">
+							<div id='r1c3' class="itemblock">
+								<img src="images/icon/buildings.png" alt="EMPTY">
+							</div>
+						</td>
+					</tr>
+					<tr class="row">
+						<td class="col">
+							<h1>商业栏</h1>
+						</td>
+						<td class="col">
+							<div id='r2c1' class="itemblock">
+								<img src="images/icon/buildings.png" alt="EMPTY">
+							</div>
+						</td>
+						<td class="col">
+							<div id='r2c2' class="itemblock">
+								<img src="images/icon/buildings.png" alt="EMPTY">
+							</div>
+						</td>
+						<td class="col">
+							<div id='r2c3' class="itemblock">
+								<img src="images/icon/buildings.png" alt="EMPTY">
+							</div>
+						</td>
+					</tr>
+					<tr class="row">
+						<td class="col">
+							<h1>住宅栏</h1>
+						</td>
+						<td class="col">
+							<div id='r3c1' class="itemblock">
+								<img src="images/icon/buildings.png" alt="EMPTY">
+							</div>
+						</td>
+						<td class="col">
+							<div id='r3c2' class="itemblock">
+								<img src="images/icon/buildings.png" alt="EMPTY">
+							</div>
+						</td>
+						<td class="col">
+							<div id='r3c3' class="itemblock">
+								<img src="images/icon/buildings.png" alt="EMPTY">
+							</div>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</main>
+		<aside class="left">
+
+			<div class="buffset">
+				<h1>现有政策加成</h1>
+				<table id="policyblocks">
+					<tr>
+						<th>编号</th>
+						<th>加成范围</th>
+						<th>效果</th>
+						<th></th>
+					</tr>
+					<tr>
+						<td colspan="4">
+							<button id="policybutton" class="addButton"></button>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div class="buffset">
+				<h1>现有任务加成</h1>
+				<table id="missionblocks">
+					<tr>
+						<th>编号</th>
+						<th>加成范围</th>
+						<th>效果</th>
+						<th></th>
+					</tr>
+					<tr>
+						<td colspan="4">
+							<button id="missionbutton" class="addButton"></button>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div id="homelight" class="buffset">
+				家园之光加成:
+				<input type="number" min="1" max="100" value="25"/><b>%</b>
+			</div>
+		</aside>
+		<aside class="right">
+			<div>
+				<h1>当前建筑列表</h1>
+				<table id="buildingblocks">
+					<tr>
+						<th>编号</th>
+						<th>建筑类型</th>
+						<th>星级</th>
+						<th>等级</th>
+						<th></th>
+					</tr>
+					<tr>
+						<td colspan="5">
+							<button id="buildingbutton" class="addButton"></button>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</aside>
+	</div>
+	<footer class="footer">
+		<div id='outerlink'>Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/"             title="Flaticon">www.flaticon.com</a></div>
+		<div>Created by <a href="https://github.com/zz920">zz920</a> </div>
+	</footer>
+
+	<script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-1.9.0.min.js"></script>
+	<script src="js/simulator.js"></script>
+</body>
+</html>

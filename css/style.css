@@ -1,0 +1,142 @@
+body {
+    font-family: Georgia, serif;
+    color: #000000;
+    padding: 0;
+    margin: 0;
+}
+.content {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    min-width: 20em;
+}
+header {
+    background-color: #336699;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    font-size: 20px;
+    padding: .5em 1em;
+}
+
+header img {
+    position: absolute;
+    right: 50px;
+    top: 0px;
+    width: auto;
+    height: 150px;
+    display: none;
+}
+
+main {
+    background-color: #FFFFFF;
+    width: 100%;
+    box-sizing: border-box;
+    order: 2;
+    padding: .5em;
+}
+.left,.right {
+    background-color: #0099FF;
+    box-sizing: border-box;
+    padding: .5em;
+    margin: 0;
+    width: 100%;
+}
+.left {
+    order: 1;
+}
+.right {
+    order: 3
+}
+
+.itemblocks {
+    width: 80%;
+    align-items: center;
+    justify-content: center;
+}
+
+.itemblock {
+    display: flex;
+    align-items: left;
+    margin: 15px;
+}
+.itemblock img {
+    width: 128px;
+    height: 128px;
+}
+
+.buffset {
+    padding-bottom: 50px;
+}
+
+.addButton {
+    background: url("../images/icon/plus.png");
+    display: inline-block;
+    height: 20px;
+    width: 20px;
+}
+
+.removebutton {
+    background: url("../images/icon/minus.png");
+    display: inline-block;
+    height: 20px;
+    width: 20px;
+}
+
+#homelight input {
+    width: 40px;
+}
+
+footer {
+    background-color: #336699;
+    text-align: center;
+    padding: .5em;
+    clear: both;
+    margin: 0;
+
+}
+
+@media screen and (min-width: 700px) {
+    .content {
+        display: block;
+        height: calc(100vh - 8em);
+        overflow-y: hidden;
+        margin: 0;
+    }
+    main {
+        position: relative;
+        float: left;
+        width: 100%;
+        padding: .2em 13.5em;
+        height: 100%;
+    }
+    .left {
+        position: relative;
+        float: left;
+        margin-left: -100%;
+        width: 12.5em;
+        height: 100%;
+    }
+    .right {
+        position: relative;
+        float: right;
+        margin-left: -100%;
+        width: 12.5em;
+        height: 100%;
+    }
+    .left img {
+        display: block;
+    }
+    header {
+        height: 6em;
+    }
+
+    header img {
+        display: inline;;
+    }
+    footer {
+        height: 2em;
+    }
+}
+
+// written by Bowen zhi
