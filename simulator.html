@@ -9,7 +9,12 @@
 <body>
 	<header>
 		<h1>家国梦数值模拟器</h1>
-		<img src="images/logo.png" alt="EMPTY">
+		<div class='headerbutton'>
+			<button id="calculation" class="calculation">
+					<h2>开始计算</h2>
+			</button>
+			<img src="images/logo.png" alt="EMPTY">
+		</div>
 	</header>
 	<div class="content">
 		<main class="main">
@@ -85,14 +90,13 @@
 				<h1>现有政策加成</h1>
 				<table id="policyblocks">
 					<tr>
-						<th>编号</th>
 						<th>加成范围</th>
 						<th>效果</th>
 						<th></th>
 					</tr>
 					<tr>
-						<td colspan="4">
-							<button id="policybutton" class="addButton"></button>
+						<td colspan="3">
+							<button id="policyAddButton" class="addButton"></button>
 						</td>
 					</tr>
 				</table>
@@ -101,21 +105,20 @@
 				<h1>现有任务加成</h1>
 				<table id="missionblocks">
 					<tr>
-						<th>编号</th>
 						<th>加成范围</th>
 						<th>效果</th>
 						<th></th>
 					</tr>
 					<tr>
-						<td colspan="4">
-							<button id="missionbutton" class="addButton"></button>
+						<td colspan="3">
+							<button id="missionAddButton" class="addButton"></button>
 						</td>
 					</tr>
 				</table>
 			</div>
 			<div id="homelight" class="buffset">
 				家园之光加成:
-				<input type="number" min="1" max="100" value="25"/><b>%</b>
+				<input class="percent" type="number" min="1" max="100" value="25"/><b>%</b>
 			</div>
 		</aside>
 		<aside class="right">
@@ -123,15 +126,14 @@
 				<h1>当前建筑列表</h1>
 				<table id="buildingblocks">
 					<tr>
-						<th>编号</th>
 						<th>建筑类型</th>
 						<th>星级</th>
 						<th>等级</th>
 						<th></th>
 					</tr>
 					<tr>
-						<td colspan="5">
-							<button id="buildingbutton" class="addButton"></button>
+						<td colspan="4">
+							<button id="buildingAddButton" class="addButton"></button>
 						</td>
 					</tr>
 				</table>
@@ -139,11 +141,12 @@
 		</aside>
 	</div>
 	<footer class="footer">
-		<div id='outerlink'>Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/"             title="Flaticon">www.flaticon.com</a></div>
-		<div>Created by <a href="https://github.com/zz920">zz920</a> </div>
+		<div style="display: none">Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/"             title="Flaticon">www.flaticon.com</a></div>
+		<div class="bottomline">Version 1.048596 @ 2019 by <a href="https://github.com/zz920">zz920</a> </div>
 	</footer>
 
 	<script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-1.9.0.min.js"></script>
 	<script src="js/simulator.js"></script>
+	<script src="js/core.js"></script>
 </body>
 </html>

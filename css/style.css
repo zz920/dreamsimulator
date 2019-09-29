@@ -19,13 +19,18 @@ header {
     padding: .5em 1em;
 }
 
-header img {
+header img{
+    width: auto;
+    height:  100%;
+    display: none;
+}
+
+.headerbutton {
     position: absolute;
     right: 50px;
     top: 0px;
     width: auto;
     height: 150px;
-    display: none;
 }
 
 main {
@@ -76,16 +81,47 @@ main {
     width: 20px;
 }
 
-.removebutton {
+.removeButton {
     background: url("../images/icon/minus.png");
     display: inline-block;
     height: 20px;
     width: 20px;
 }
 
-#homelight input {
-    width: 40px;
+.calculation {
+    display: inline-block;
+    vertical-align: top;
+    background: #FFCC00;
+    margin-top: 20px;
 }
+
+.percent {
+    width: 40px;
+    height:  23px;
+    padding: 0px;
+    border: 0px;
+}
+
+.rank {
+    width:  40px;
+    height:  23px;
+    padding: 0px;
+    border: 0px;
+}
+
+.star {
+    height:  23px;
+    padding: 0px;
+    border: 0px;
+}
+
+.type {
+    height:  23px;
+    padding: 0px;
+    border: 0px;
+}
+
+
 
 footer {
     background-color: #336699;
@@ -94,6 +130,10 @@ footer {
     clear: both;
     margin: 0;
 
+}
+
+.bottomline {
+    padding: 5px;
 }
 
 @media screen and (min-width: 700px) {
@@ -121,7 +161,7 @@ footer {
         position: relative;
         float: right;
         margin-left: -100%;
-        width: 12.5em;
+        width: 25em;
         height: 100%;
     }
     .left img {
@@ -132,7 +172,7 @@ footer {
     }
 
     header img {
-        display: inline;;
+        display: inline;
     }
     footer {
         height: 2em;
