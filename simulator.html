@@ -81,7 +81,13 @@
 							</div>
 						</td>
 					</tr>
+					<tr class="row">
+						<td colspan="4">
+							<h1 id="result"></h1>
+						</td>
+					</tr>
 				</table>
+				
 			</div>
 		</main>
 		<aside class="left">
@@ -116,6 +122,21 @@
 					</tr>
 				</table>
 			</div>
+			<div class="buffset">
+				<h1>现有相册加成</h1>
+				<table id="collectionblocks">
+					<tr>
+						<th>加成范围</th>
+						<th>效果</th>
+						<th></th>
+					</tr>
+					<tr>
+						<td colspan="3">
+							<button id="collectionAddButton" class="addButton"></button>
+						</td>
+					</tr>
+				</table>
+			</div>
 			<div id="homelight" class="buffset">
 				家园之光加成:
 				<input class="percent" type="number" min="1" max="100" value="25"/><b>%</b>
@@ -146,6 +167,7 @@
 	</footer>
 
 	<script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-1.9.0.min.js"></script>
+	<script src="js/perm.js"></script>
 	<script src="js/simulator.js"></script>
 	<script src="js/core.js"></script>
 </body>
