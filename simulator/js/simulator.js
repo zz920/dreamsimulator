@@ -41,10 +41,10 @@ var benefitType = [
     { value: "供货", text: "供货"}
 ];
 
-var missionType = $.merge(buildingType, benefitType);
+var missionType = [].concat(buildingType, benefitType);
 
 var addBuilding = function(name, star=1, level=1){
-	
+
 	$("#buildingblocks tr:last").before(`
 		<tr>
 			<td>
@@ -95,23 +95,29 @@ var addBuilding = function(name, star=1, level=1){
 	});
 	})();
 
-	if (name) {
-		typeSelector.trigger('focus');
-		typeSelector.find('option[value=' + name + ']').prop('selected', true).trigger('change');
-	}
-
 	for (i=1; i<=5; i++){
 		starSelector.append($("<option></option>").val(i).html(i));
 	}
-
-	starSelector.find('option[value=' + star + ']').prop('selected', true).trigger('change');
 
 	rankInput.change(function(){
 		if (parseInt($(this).val()) > levelLimit) {
 			$(this).val(levelLimit);
 		}
 	});
-	rankInput.val(level).trigger("input");
+	
+	if (typeof name === 'string') {
+		console.log(name);
+		typeSelector.trigger('focus');
+		typeSelector.find('option[value=' + name + ']').prop('selected', true).trigger('change');
+	}
+
+	if (typeof star === 'number') {
+		starSelector.find('option[value=' + star + ']').prop('selected', true).trigger('change');
+	}
+
+	if (typeof level === 'number') {
+		rankInput.val(level).trigger("input");
+	}
 
 	insertTds.eq(3).find("button").on("click", function(){
 		$("#buildingblocks option[value=" + typeSelector.val() + "]").each(function(){
