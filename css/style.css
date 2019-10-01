@@ -70,6 +70,15 @@ main {
     height: 128px;
 }
 
+.itemblock div {
+    width: 100px;
+}
+
+.itemblock p {
+    padding-left: 3px;
+    padding-top: 3px;
+}
+
 .buffset {
     padding-bottom: 50px;
 }
@@ -139,7 +148,7 @@ footer {
 @media screen and (min-width: 700px) {
     .content {
         display: block;
-        height: calc(100vh - 8em);
+        height: calc(200vh - 8em);
         overflow-y: hidden;
         margin: 0;
     }
