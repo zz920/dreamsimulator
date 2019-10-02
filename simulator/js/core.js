@@ -2,9 +2,8 @@ var calculateBasic = function(name, gain, level, star){
 	if(!buildCfg.hasOwnProperty(name)) {
 		return 0;
 	}
-	var step = Math.floor(level / 10);
-	var offset = parseInt(level - step * 10);
-	var basic = levelGain[step] + offset * (levelGain[step + 1] - levelGain[step]) / 10;
+	
+	var basic = levelGain[level];
 	return Math.round(basic * gain * starOffset[star]);
 };
 
@@ -216,6 +215,7 @@ $("#calculation").on("click", function(){
 		}
 		var id = "r" + row + "c" + col;
 		$("#" + id +" p.title").text(b.name);
+		$("#" + id +" p.detail").text("Lv." + parseInt(b.level) + "⭐" + parseInt(b.star));
 		$("#" + id +" p.base").text("基础:" + f(resultDetail[i].basevalue));
 		$("#" + id +" p.total").text("全部:" + f(resultDetail[i].totalvalue));
 	});
