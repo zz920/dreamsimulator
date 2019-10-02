@@ -97,6 +97,15 @@ main {
     width: 20px;
 }
 
+.saveButton {
+    height: 30px;
+    width: 120px;
+}
+
+.onlinestatus {
+    padding-left: 3px;
+}
+
 .calculation {
     display: inline-block;
     vertical-align: top;

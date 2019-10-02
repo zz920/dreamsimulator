@@ -86,39 +86,31 @@ var calculateAllValue = function(building, mission, policy, collection, homeligh
 
 
 $("#calculation").on("click", function(){
+	loadConfigFromPage();
 	var industryB = new Array();
 	var commerceB = new Array();
 	var residenceB = new Array();
+	var typeMapping = {
+		"工业": industryB,
+		"商业": commerceB,
+		"住宅": residenceB,
+	};
 
 	var avaiablePolicy = new Array();
 	var avaiableMission = new Array();
 	var avaiableCollection = new Array();
-	var homelight = $("#homelight input").val() * 1.0 / 100;
+	var homelight = configJson.homelight / 100;
+	var online = configJson.online;
 
-    
-	$("#buildingblocks").find("tr").each(function() {	
-	    	
-		var tds = $(this).find("td");
-		if (tds.length <= 1) {
-			return null;
-		}
-
-		var name = tds.eq(0).find("select").val();
-		var star = parseInt(tds.eq(1).find("select").val());
-		var level = parseInt(tds.eq(2).find("input").val());
+	configJson.building.forEach(function(b) {
+		var name = b.name;
+		var star = parseInt(b.star);
+		var level = parseInt(b.level);
 
 		var building = buildCfg[name];
 
-		if (name && star && level) {
-			var b;
-			if (building.type === "工业") {
-				b = industryB;
-			} else if (building.type === "商业") {
-				b = commerceB;
-			} else {
-				b = residenceB;
-			}
-			b.push($.extend({
+		if (name && star && level && building) {
+			typeMapping[building.type].push($.extend({
 				"name": name,
 				"star": star,
 				"level": level,
@@ -126,46 +118,30 @@ $("#calculation").on("click", function(){
 		}
 	});
 
-	$("#missionblocks").find("tr").each(function() {
-		var tds = $(this).find("td");
-		if (tds.length <= 1) {
-			return null;
-		}
-		var name = tds.eq(0).find(":selected").text();
-		var value = parseInt(tds.eq(1).find("input").val())/100;
+	configJson.mission.forEach(function(m) {
 		avaiableMission.push({
-			"name": name,
-			"value": value
+			"name": m.name,
+			"value": m.value/100,
 		});
 	});
 
-	$("#policyblocks").find("tr").each(function() {
-		var tds = $(this).find("td");
-		if (tds.length <= 1) {
-			return null;
-		}
-		var name = tds.eq(0).find(":selected").text();
-		var value = parseInt(tds.eq(1).find("input").val())/100;
+	configJson.policy.forEach(function(p) {
 		avaiablePolicy.push({
-			"name": name,
-			"value": value
+			"name": p.name,
+			"value": p.value/100,
 		});
 	});
 
-	$("#collectionblocks").find("tr").each(function() {
-		var tds = $(this).find("td");
-		if (tds.length <= 1) {
-			return null;
-		}
-		var name = tds.eq(0).find(":selected").text();
-		var value = parseInt(tds.eq(1).find("input").val())/100;
+	configJson.collection.forEach(function(c) {
 		avaiableCollection.push({
-			"name": name,
-			"value": value
+			"name": c.name,
+			"value": c.value/100,
 		});
-	});
+	})
 
-	var maxValue = 0;
+	var maxV = 0;
+	var resultB;
+
 	var resltBuilding, resultDetail;
 	var resultCnt = 0;
 
@@ -173,8 +149,6 @@ $("#calculation").on("click", function(){
 		getCombinations(commerceB, 3).forEach(function(cb){
 			getCombinations(residenceB, 3).forEach(function(rb){
 				var b = [].concat(ib, cb, rb);
-				var online = true;
-				
 				var result = calculateAllValue(b, avaiableMission, avaiablePolicy, avaiableCollection, homelight, online);
 				if (maxValue < result.value) {
 					maxValue = result.value;
@@ -185,22 +159,27 @@ $("#calculation").on("click", function(){
 			});
 		}); 
 	});
+
+	var buff = calculateBuff(resultB, avaiableMission, avaiablePolicy, avaiableCollection, homelight, online);
+
 	
 	var f = function(number) {
-		if (number < 1000) {
+		if (number < 1e+3) {
 			return number.toFixed(0);
 		}
-		if (number < 1000000) {
-			return (number/1000).toFixed(2) + "K";
+		if (number < 1e+6) {
+			return (number/1e+3).toFixed(2) + "K";
 		}
-		if (number < 1000000000) {
-			return (number/1000000).toFixed(2) + "M";
+		if (number < 1e+9) {
+			return (number/1e+6).toFixed(2) + "M";
 		}
-		if (number < 1000000000000) {
-			return (number/1000000000).toFixed(2) + "B";
+		if (number < 1e+12) {
+			return (number/1e+9).toFixed(2) + "B";
 		}
-		
-		return (number/1000000000000).toFixed(2) + "T";
+		if (number < 1e+15) {
+			return (number/1e+12).toFixed(2) + "T";
+		}
+		return (number/1e+15).toFixed(2) + "aa";
 	}
 
 	var row = 0, col = 0;
