@@ -195,6 +195,14 @@ $("#calculation").on("click", function(){
 		$("#" + id +" p.detail").text("Lv." + parseInt(b.level) + "⭐" + parseInt(b.star));
 		$("#" + id +" p.base").text("基础:" + f(resultDetail[i].basevalue));
 		$("#" + id +" p.total").text("全部:" + f(resultDetail[i].totalvalue));
+		if (b.level < levelLimit) {
+			debugger;
+			$('#' + id +" p.benefit").text("每1金升级收益:" + 
+				((levelGain[b.level+1] - levelGain[b.level]) / cost[b.rare][b.level + 1]).toExponential(1)
+			);
+		} else {
+			$('#' + id +" p.benefit").text("已满级");
+		}
 	});
 
 	$("#result").text("预计总收入为：" + f(maxValue) + "(总遍历"+ resultCnt + "个结果)");
