@@ -197,7 +197,7 @@ $("#calculation").on("click", function(){
 		$("#" + id +" p.total").text("全部:" + f(resultDetail[i].totalvalue));
 		if (b.level < levelLimit) {
 			debugger;
-			$('#' + id +" p.benefit").text("每1金升级收益:" + 
+			$('#' + id +" p.benefit").text("每金升级收益:" + 
 				((levelGain[b.level+1] - levelGain[b.level]) / cost[b.rare][b.level + 1]).toExponential(1)
 			);
 		} else {
