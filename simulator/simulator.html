@@ -32,6 +32,7 @@
 									<p class="detail"></p>
 									<p class="base"></p>
 									<p class="total"></p>
+									<p class="benefit"></p>
 								</div>
 							</div>
 						</td>
@@ -43,6 +44,7 @@
 									<p class="detail"></p>
 									<p class="base"></p>
 									<p class="total"></p>
+									<p class="benefit"></p>
 								</div>
 							</div>
 						</td>
@@ -54,6 +56,7 @@
 									<p class="detail"></p>
 									<p class="base"></p>
 									<p class="total"></p>
+									<p class="benefit"></p>
 								</div>
 							</div>
 						</td>
@@ -70,6 +73,7 @@
 									<p class="detail"></p>
 									<p class="base"></p>
 									<p class="total"></p>
+									<p class="benefit"></p>
 								</div>
 							</div>
 						</td>
@@ -81,6 +85,7 @@
 									<p class="detail"></p>
 									<p class="base"></p>
 									<p class="total"></p>
+									<p class="benefit"></p>
 								</div>
 							</div>
 						</td>
@@ -92,6 +97,7 @@
 									<p class="detail"></p>
 									<p class="base"></p>
 									<p class="total"></p>
+									<p class="benefit"></p>
 								</div>
 							</div>
 						</td>
@@ -108,6 +114,7 @@
 									<p class="detail"></p>
 									<p class="base"></p>
 									<p class="total"></p>
+									<p class="benefit"></p>
 								</div>
 							</div>
 						</td>
@@ -119,6 +126,7 @@
 									<p class="detail"></p>
 									<p class="base"></p>
 									<p class="total"></p>
+									<p class="benefit"></p>
 								</div>
 							</div>
 						</td>
@@ -130,6 +138,7 @@
 									<p class="detail"></p>
 									<p class="base"></p>
 									<p class="total"></p>
+									<p class="benefit"></p>
 								</div>
 							</div>
 						</td>
@@ -137,6 +146,11 @@
 					<tr class="row">
 						<td colspan="4">
 							<h1 id="result"></h1>
+						</td>
+					</tr>
+					<tr class="row">
+						<td colspan="4">
+							<h1 id="supply"></h1>
 						</td>
 					</tr>
 				</table>
@@ -198,6 +212,7 @@
 		<aside class="right">
 			<div>
 				<h1>当前建筑列表</h1>
+				<div class="onlinestatus">是否在线: <input id="online" type="checkbox" value="1" checked></div>
 				<table id="buildingblocks">
 					<tr>
 						<th>建筑类型</th>
@@ -212,9 +227,9 @@
 					</tr>
 				</table>
 			</div>
-			
+			<button id="save" class="saveButton">保存当前配置</button>
 		</aside>
-
+		
 	</div>
 	<footer class="footer">
 		<div style="display: none">Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/"             title="Flaticon">www.flaticon.com</a></div>

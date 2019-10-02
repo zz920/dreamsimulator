@@ -336,6 +336,7 @@ var configJson = {
 			"name": "工业",
 			"value": 150,
 		},
+		
 		// 两广海南部分收集
 
 		{
@@ -385,6 +386,7 @@ var configJson = {
 		},
 	],
 	
-	// 家园之光 50%
+	// 家园之光 55%
 	"homelight": 55,
+	"online": true,
 };

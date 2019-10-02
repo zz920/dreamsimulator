@@ -43,6 +43,7 @@ var benefitType = [
 
 var missionType = [].concat(buildingType, benefitType);
 
+
 var addBuilding = function(name, star=1, level=1){
 
 	$("#buildingblocks tr:last").before(`
@@ -106,7 +107,7 @@ var addBuilding = function(name, star=1, level=1){
 	});
 	
 	if (typeof name === 'string') {
-		console.log(name);
+		//console.log(name);
 		typeSelector.trigger('focus');
 		typeSelector.find('option[value=' + name + ']').prop('selected', true).trigger('change');
 	}
@@ -214,7 +215,89 @@ var addCollection = function(name="工业", value=0){
 	});
 };
 
+$("#buildingAddButton").on("click", addBuilding);
+$("#missionAddButton").on("click", addMission);
+$("#policyAddButton").on("click", addPolicy);
+$("#collectionAddButton").on("click", addCollection);
+
+function loadConfigFromPage() {
+	configJson = {
+		'building': [],
+		'policy': [],
+		'mission': [],
+		'collection': [],
+		'homelight': 0,
+		'online': true,
+	}
+	$("#buildingblocks").find("tr").each(function() {
+		var tds = $(this).find("td");
+		if (tds.length <= 1) {
+			return null;
+		}
+		var name = tds.eq(0).find("select").val();
+		var star = parseInt(tds.eq(1).find("select").val());
+		var level = parseInt(tds.eq(2).find("input").val());
+
+		if (name && star && level) {
+			configJson.building.push({
+				"name": name,
+				"star": star,
+				"level": level,
+			});
+		}
+	});
+	
+	$("#missionblocks").find("tr").each(function() {
+        var tds = $(this).find("td");
+        if (tds.length <= 1) {
+            return null;
+        }
+        var name = tds.eq(0).find(":selected").text();
+        var value = parseInt(tds.eq(1).find("input").val());
+		configJson.mission.push({
+            "name": name,
+            "value": value 
+        });
+	});
+
+	$("#policyblocks").find("tr").each(function() {
+        var tds = $(this).find("td");
+        if (tds.length <= 1) {
+            return null;
+        }
+        var name = tds.eq(0).find(":selected").text();
+        var value = parseInt(tds.eq(1).find("input").val());
+
+        configJson.policy.push({
+            "name": name,
+            "value": value,
+        });
+	});
+
+	$("#collectionblocks").find("tr").each(function() {
+    	var tds = $(this).find("td");
+	    if (tds.length <= 1) {
+	    	return null;
+	    }
+	    var name = tds.eq(0).find(":selected").text();
+	    var value = parseInt(tds.eq(1).find("input").val());
+	    configJson.collection.push({
+	        "name": name,
+	        "value": value,
+	    });
+    });
+    configJson.homelight = parseInt($("#homelight input").val());
+    configJson.online = $("#online").is(':checked');
+};
+
 $(function loadConfigFile() {
+	var config = local_load("config");
+
+	if (config) {
+		// use cache to overwrite the configJson
+		configJson = config;
+	}
+
 	$.each(configJson.building, function(i, obj){
 		addBuilding(obj.name, obj.star, obj.level);
 	});
@@ -234,8 +317,19 @@ $(function loadConfigFile() {
 	$("#homelight input").val(configJson.homelight);
 });
 
-$("#buildingAddButton").on("click", addBuilding);
-$("#missionAddButton").on("click", addMission);
-$("#policyAddButton").on("click", addPolicy);
-$("#collectionAddButton").on("click", addCollection);
+var storage = window.localStorage;
 
+// save configJson object to local storage
+function local_save(name, value) {
+	storage.setItem(name, JSON.stringify(value));
+};
+
+// read from local storage
+function local_load(name) {
+	return JSON.parse(storage.getItem(name));
+};
+
+$("#save").on("click", function(){
+	loadConfigFromPage();
+	local_save("config", configJson);
+});

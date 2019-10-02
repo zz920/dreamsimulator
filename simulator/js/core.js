@@ -18,7 +18,7 @@ var calculateValue = function(name, basic, type, buff, homelight, online){
 
 		return 1.0 + namebuff + typebuff + globalbuff + statusbuff;
 	};
-	return basic * sumBuff('building') * (sumBuff('policy') + homelight) * sumBuff('collection') * sumBuff('mission');
+	return basic * sumBuff('building') * (sumBuff('policy') + homelight) * sumBuff('collection') * sumBuff('mission') * statusgain;
 };
 
 var calculateBuff = function(building, mission, policy, collection){
@@ -86,39 +86,31 @@ var calculateAllValue = function(building, mission, policy, collection, homeligh
 
 
 $("#calculation").on("click", function(){
+	loadConfigFromPage();
 	var industryB = new Array();
 	var commerceB = new Array();
 	var residenceB = new Array();
+	var typeMapping = {
+		"工业": industryB,
+		"商业": commerceB,
+		"住宅": residenceB,
+	};
 
 	var avaiablePolicy = new Array();
 	var avaiableMission = new Array();
 	var avaiableCollection = new Array();
-	var homelight = $("#homelight input").val() * 1.0 / 100;
+	var homelight = configJson.homelight / 100;
+	var online = configJson.online;
 
-    
-	$("#buildingblocks").find("tr").each(function() {	
-	    	
-		var tds = $(this).find("td");
-		if (tds.length <= 1) {
-			return null;
-		}
-
-		var name = tds.eq(0).find("select").val();
-		var star = parseInt(tds.eq(1).find("select").val());
-		var level = parseInt(tds.eq(2).find("input").val());
+	configJson.building.forEach(function(b) {
+		var name = b.name;
+		var star = parseInt(b.star);
+		var level = parseInt(b.level);
 
 		var building = buildCfg[name];
 
-		if (name && star && level) {
-			var b;
-			if (building.type === "工业") {
-				b = industryB;
-			} else if (building.type === "商业") {
-				b = commerceB;
-			} else {
-				b = residenceB;
-			}
-			b.push($.extend({
+		if (name && star && level && building) {
+			typeMapping[building.type].push($.extend({
 				"name": name,
 				"star": star,
 				"level": level,
@@ -126,44 +118,26 @@ $("#calculation").on("click", function(){
 		}
 	});
 
-	$("#missionblocks").find("tr").each(function() {
-		var tds = $(this).find("td");
-		if (tds.length <= 1) {
-			return null;
-		}
-		var name = tds.eq(0).find(":selected").text();
-		var value = parseInt(tds.eq(1).find("input").val())/100;
+	configJson.mission.forEach(function(m) {
 		avaiableMission.push({
-			"name": name,
-			"value": value
+			"name": m.name,
+			"value": m.value/100,
 		});
 	});
 
-	$("#policyblocks").find("tr").each(function() {
-		var tds = $(this).find("td");
-		if (tds.length <= 1) {
-			return null;
-		}
-		var name = tds.eq(0).find(":selected").text();
-		var value = parseInt(tds.eq(1).find("input").val())/100;
+	configJson.policy.forEach(function(p) {
 		avaiablePolicy.push({
-			"name": name,
-			"value": value
+			"name": p.name,
+			"value": p.value/100,
 		});
 	});
 
-	$("#collectionblocks").find("tr").each(function() {
-		var tds = $(this).find("td");
-		if (tds.length <= 1) {
-			return null;
-		}
-		var name = tds.eq(0).find(":selected").text();
-		var value = parseInt(tds.eq(1).find("input").val())/100;
+	configJson.collection.forEach(function(c) {
 		avaiableCollection.push({
-			"name": name,
-			"value": value
+			"name": c.name,
+			"value": c.value/100,
 		});
-	});
+	})
 
 	var maxValue = 0;
 	var resltBuilding, resultDetail;
@@ -173,8 +147,6 @@ $("#calculation").on("click", function(){
 		getCombinations(commerceB, 3).forEach(function(cb){
 			getCombinations(residenceB, 3).forEach(function(rb){
 				var b = [].concat(ib, cb, rb);
-				var online = true;
-				
 				var result = calculateAllValue(b, avaiableMission, avaiablePolicy, avaiableCollection, homelight, online);
 				if (maxValue < result.value) {
 					maxValue = result.value;
@@ -185,22 +157,27 @@ $("#calculation").on("click", function(){
 			});
 		}); 
 	});
+
+	var buff = calculateBuff(resultBuilding, avaiableMission, avaiablePolicy, avaiableCollection, homelight, online);
+
 	
 	var f = function(number) {
-		if (number < 1000) {
+		if (number < 1e+3) {
 			return number.toFixed(0);
 		}
-		if (number < 1000000) {
-			return (number/1000).toFixed(2) + "K";
+		if (number < 1e+6) {
+			return (number/1e+3).toFixed(2) + "K";
 		}
-		if (number < 1000000000) {
-			return (number/1000000).toFixed(2) + "M";
+		if (number < 1e+9) {
+			return (number/1e+6).toFixed(2) + "M";
 		}
-		if (number < 1000000000000) {
-			return (number/1000000000).toFixed(2) + "B";
+		if (number < 1e+12) {
+			return (number/1e+9).toFixed(2) + "B";
 		}
-		
-		return (number/1000000000000).toFixed(2) + "T";
+		if (number < 1e+15) {
+			return (number/1e+12).toFixed(2) + "T";
+		}
+		return (number/1e+15).toFixed(2) + "aa";
 	}
 
 	var row = 0, col = 0;
@@ -218,8 +195,21 @@ $("#calculation").on("click", function(){
 		$("#" + id +" p.detail").text("Lv." + parseInt(b.level) + "⭐" + parseInt(b.star));
 		$("#" + id +" p.base").text("基础:" + f(resultDetail[i].basevalue));
 		$("#" + id +" p.total").text("全部:" + f(resultDetail[i].totalvalue));
+		if (b.level < levelLimit) {
+			debugger;
+			$('#' + id +" p.benefit").text("每1金升级收益:" + 
+				((levelGain[b.level+1] - levelGain[b.level]) / cost[b.rare][b.level + 1]).toExponential(1)
+			);
+		} else {
+			$('#' + id +" p.benefit").text("已满级");
+		}
 	});
 
 	$("#result").text("预计总收入为：" + f(maxValue) + "(总遍历"+ resultCnt + "个结果)");
 	
+	var supply_rate = parseInt(((buff['building']['供货']? buff['building']['供货']: 0) + 
+		(buff['mission']['供货']? buff['mission']['供货']: 0) +
+		(buff['policy']['供货']? buff['policy']['供货']: 0) + 
+		(buff['collection']['供货']? buff['collection']['供货']: 0)) * 100);
+	$("#supply").text("供货加成为：" + supply_rate + "%");
 });
