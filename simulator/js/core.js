@@ -18,7 +18,7 @@ var calculateValue = function(name, basic, type, buff, homelight, online){
 
 		return 1.0 + namebuff + typebuff + globalbuff + statusbuff;
 	};
-	return basic * sumBuff('building') * (sumBuff('policy') + homelight) * sumBuff('collection') * sumBuff('mission');
+	return basic * sumBuff('building') * (sumBuff('policy') + homelight) * sumBuff('collection') * sumBuff('mission') * statusgain;
 };
 
 var calculateBuff = function(building, mission, policy, collection){
@@ -198,10 +198,10 @@ $("#calculation").on("click", function(){
 	});
 
 	$("#result").text("预计总收入为：" + f(maxValue) + "(总遍历"+ resultCnt + "个结果)");
-
-	var supply_rate = parseInt((buff['building']['供货']? buff['building']['供货']: 0 + 
-		buff['mission']['供货']? buff['mission']['供货']: 0 +
-		buff['policy']['供货']? buff['policy']['供货']: 0 + 
-		buff['collection']['供货']? buff['collection']['供货']: 0) * 100);
+	
+	var supply_rate = parseInt(((buff['building']['供货']? buff['building']['供货']: 0) + 
+		(buff['mission']['供货']? buff['mission']['供货']: 0) +
+		(buff['policy']['供货']? buff['policy']['供货']: 0) + 
+		(buff['collection']['供货']? buff['collection']['供货']: 0)) * 100);
 	$("#supply").text("供货加成为：" + supply_rate + "%");
 });
