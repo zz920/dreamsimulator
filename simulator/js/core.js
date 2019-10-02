@@ -139,9 +139,7 @@ $("#calculation").on("click", function(){
 		});
 	})
 
-	var maxV = 0;
-	var resultB;
-
+	var maxValue = 0;
 	var resltBuilding, resultDetail;
 	var resultCnt = 0;
 
@@ -160,7 +158,7 @@ $("#calculation").on("click", function(){
 		}); 
 	});
 
-	var buff = calculateBuff(resultB, avaiableMission, avaiablePolicy, avaiableCollection, homelight, online);
+	var buff = calculateBuff(resultBuilding, avaiableMission, avaiablePolicy, avaiableCollection, homelight, online);
 
 	
 	var f = function(number) {
@@ -200,5 +198,10 @@ $("#calculation").on("click", function(){
 	});
 
 	$("#result").text("预计总收入为：" + f(maxValue) + "(总遍历"+ resultCnt + "个结果)");
-	
+
+	var supply_rate = parseInt((buff['building']['供货']? buff['building']['供货']: 0 + 
+		buff['mission']['供货']? buff['mission']['供货']: 0 +
+		buff['policy']['供货']? buff['policy']['供货']: 0 + 
+		buff['collection']['供货']? buff['collection']['供货']: 0) * 100);
+	$("#supply").text("供货加成为：" + supply_rate + "%");
 });
