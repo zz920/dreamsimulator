@@ -298,6 +298,7 @@ $(function loadConfigFile() {
 		configJson = config;
 	}
 
+	//clean all 
 	$.each(configJson.building, function(i, obj){
 		addBuilding(obj.name, obj.star, obj.level);
 	});
@@ -317,6 +318,8 @@ $(function loadConfigFile() {
 	$("#homelight input").val(configJson.homelight);
 });
 
+
+
 var storage = window.localStorage;
 
 // save configJson object to local storage
@@ -329,7 +332,18 @@ function local_load(name) {
 	return JSON.parse(storage.getItem(name));
 };
 
+// delete local storage
+function local_delete(name) {
+	storage.removeItem(name);
+};
+
 $("#save").on("click", function(){
 	loadConfigFromPage();
 	local_save("config", configJson);
+});
+
+$("#delete").on("click", function(){
+	local_delete("config");
+	// load default config
+	loadConfigFile();
 });

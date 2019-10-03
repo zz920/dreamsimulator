@@ -101,6 +101,11 @@ main {
     width: 120px;
 }
 
+.deleteButton {
+    height: 30px;
+    width: 120px;
+}
+
 .onlinestatus {
     padding-left: 3px;
 }
