@@ -78,6 +78,10 @@ main {
     padding-left: 3px;
 }
 
+.itemblock button {
+    display: none;
+}
+
 .buffset {
     padding-bottom: 50px;
 }
