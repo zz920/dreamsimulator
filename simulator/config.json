@@ -21,170 +21,170 @@ var configJson = {
 	"building": [
 		{
 			"name": "钢结构房",
-			"star": 1,
-			"level": 600,
+			"star": 3,
+			"level": 225,
 		},
 
 		{
 			"name": "木屋",
-			"star": 4,
-			"level": 673,
+			"star": 2,
+			"level": 200,
 		},
 
 		{
 			"name": "木材厂",
-			"star": 4,
-			"level": 678,
+			"star": 3,
+			"level": 200,
 		},
 		
 		{
 			"name": "食品厂",
-			"star": 4,
-			"level": 603,
+			"star": 3,
+			"level": 200,
 		},
 
 		{
 			"name": "居民楼",
-			"star": 4,
-			"level": 636,
+			"star": 3,
+			"level": 200,
 		},
 
 		{
 			"name": "便利店",
-			"star": 4,
-			"level": 601,
+			"star": 2,
+			"level": 200,
 		},
 		
 		{
 			"name": "菜市场",
-			"star": 4,
-			"level": 600,
+			"star": 3,
+			"level": 200,
 		},
 		
 		{
 			"name": "五金店",
-			"star": 4,
-			"level": 488,
+			"star": 2,
+			"level": 200,
 		},
 
 		{
 			"name": "造纸厂",
-			"star": 4,
-			"level": 663,
+			"star": 2,
+			"level": 200,
 		},
 
 		{
 			"name": "服装店",
-			"star": 4,
-			"level": 467,
+			"star": 2,
+			"level": 200,
 		},
 
 		{
 			"name": "学校",
-			"star": 4,
-			"level": 601,
+			"star": 1,
+			"level": 200,
 		},
 
 		{
 			"name": "平房",
-			"star": 4,
-			"level": 601,
+			"star": 3,
+			"level": 200,
 		},
 
 		{
 			"name": "纺织厂",
-			"star": 3,
-			"level": 456,
+			"star": 2,
+			"level": 200,
 		},
 
 		{
 			"name": "水厂",
-			"star": 3,
-			"level": 450,
+			"star": 1,
+			"level": 1,
 		},
 
 		{
 			"name": "小型公寓",
-			"star": 3,
-			"level": 600,
+			"star": 1,
+			"level": 1,
 		},
 
 		{
 			"name": "电厂",
-			"star": 3,
-			"level": 600,
+			"star": 1,
+			"level": 1,
 		},
 
 		{
 			"name": "钢铁厂",
 			"star": 3,
-			"level": 600,
+			"level": 225,
 		},
 
 		{
 			"name": "企鹅机械",
-			"star": 2,
-			"level": 600,
+			"star": 1,
+			"level": 200,
 		},
 
 		{
 			"name": "图书城",
-			"star": 3,
-			"level": 603,
+			"star": 2,
+			"level": 200,
 		},
 
 		{
 			"name": "民食斋",
 			"star": 2,
-			"level": 600,
+			"level": 225,
 		},
 
 		{
 			"name": "零件厂",
-			"star": 2,
-			"level": 600,
+			"star": 1,
+			"level": 200,
 		},
 
 		{
 			"name": "花园洋房",
 			"star": 1,
-			"level": 409,
+			"level": 1,
 		},
 
 		{
 			"name": "人民石油",
 			"star": 1,
-			"level": 401,
+			"level": 1,
 		},
 
 		{
 			"name": "人才公寓",
 			"star": 1,
-			"level": 602,
+			"level": 200,
 		},
 
 		{
 			"name": "中式小楼",
 			"star": 1,
-			"level": 600,
+			"level": 1,
 		},
 
 		{
 			"name": "商贸中心",
 			"star": 1,
-			"level": 600,
+			"level": 1,
 		},
 
 		{
 			"name": "加油站",
 			"star": 1,
-			"level": 600,
+			"level": 1,
 		},
 
 		{
 			"name": "媒体之声",
 			"star": 1,
-			"level": 600,
+			"level": 1,
 		},
 	],
 
@@ -203,37 +203,37 @@ var configJson = {
 	"policy": [
 		{
 			"name": "工业",
-			"value": 600,
+			"value": 0,
 		},
 
 		{
 			"name": "全局",
-			"value": 100,
+			"value": 75,
 		},
 
 		{
 			"name": "商业",
-			"value": 300,
+			"value": 150,
 		},
 
 		{
 			"name": "住宅",
-			"value": 300,
+			"value": 150,
 		},
 
 		{
 			"name": "全局",
-			"value": 200,
+			"value": 0,
 		},
 
 		{
 			"name": "在线全局",
-			"value": 200,
+			"value": 0,
 		},
 
 		{
 			"name": "离线全局",
-			"value": 100,
+			"value": 0,
 		},
 
 		// 国庆加成
@@ -299,92 +299,6 @@ var configJson = {
 		name可选值如下： "工业","商业","住宅","全局",
 		"在线全局","离线全局","供货"
 	*/
-	
-	"collection": [
-		// 以下是东三省全收集
-		{
-			"name": "全局",
-			"value": 60,
-		},
-
-		{
-			"name": "在线全局",
-			"value": 50,
-		},
-
-		{
-			"name": "供货",
-			"value": 8,
-		},
-
-		{
-			"name": "离线全局",
-			"value": 30,
-		},
-
-		{
-			"name": "住宅",
-			"value": 30,
-		},
-
-		{
-			"name": "商业",
-			"value": 180,
-		},
-
-		{
-			"name": "工业",
-			"value": 150,
-		},
-		
-		// 两广海南部分收集
-
-		{
-			"name": "全局",
-			"value": 30,
-		},
-
-		{
-			"name": "在线全局",
-			"value": 30,
-		},
-
-		{
-			"name": "供货",
-			"value": 2,
-		},
-
-		{
-			"name": "离线全局",
-			"value": 40,
-		},
-
-		{
-			"name": "住宅",
-			"value": 60,
-		},
-
-		{
-			"name": "工业",
-			"value": 60,
-		},
-
-		// 福建部分收集
-		{
-			"name": "住宅",
-			"value": 60,
-		},
-
-		{
-			"name": "全局",
-			"value": 20,
-		},
-
-		{
-			"name": "离线全局",
-			"value": 10,
-		},
-	],
 	
 	// 家园之光 55%
 	"homelight": 55,
