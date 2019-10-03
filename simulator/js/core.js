@@ -86,6 +86,7 @@ var calculateAllValue = function(building, mission, policy, collection, homeligh
 
 
 $("#calculation").on("click", function(){
+	debugger;
 	loadConfigFromPage();
 	var industryB = new Array();
 	var commerceB = new Array();
@@ -162,29 +163,31 @@ $("#calculation").on("click", function(){
 
 	
 	var f = function(number) {
-		if (number < 1e+3) {
-			return number.toFixed(0);
-		}
-		if (number < 1e+6) {
-			return (number/1e+3).toFixed(2) + "K";
-		}
-		if (number < 1e+9) {
-			return (number/1e+6).toFixed(2) + "M";
-		}
-		if (number < 1e+12) {
-			return (number/1e+9).toFixed(2) + "B";
-		}
-		if (number < 1e+15) {
-			return (number/1e+12).toFixed(2) + "T";
-		}
-		return (number/1e+15).toFixed(2) + "aa";
+		var unit = ["", "K", "M", "B", "T",
+			"aa", "bb", "cc", "dd", "ee", 
+			"ff", "gg"];
+		var index = 0;
+		while(Math.pow(10, index*3 + 3) < number && index < unit.length - 1) {
+			index += 1;
+		} 
+		return (number/Math.pow(10, index*3)).toFixed(2) + unit[index];
 	}
 
 	var row = 0, col = 0;
 	var last_type;
+
+	// clean the last output
+	debugger;
+	$(".itemblocks").find("td p").each(function(){
+		$(this).text("");
+	});
+
+	var rowMap = {"工业": 1, "商业": 2, "住宅": 3};
+	var last_type;
 	resultBuilding.forEach(function(b, i){
+		var row = rowMap[b.type];
+
 		if (last_type != b.type) {
-			row += 1;
 			col = 1;
 			last_type = b.type;
 		} else {
@@ -196,10 +199,10 @@ $("#calculation").on("click", function(){
 		$("#" + id +" p.base").text("基础:" + f(resultDetail[i].basevalue));
 		$("#" + id +" p.total").text("全部:" + f(resultDetail[i].totalvalue));
 		if (b.level < levelLimit) {
+			var score = (Math.log((levelGain[b.level+1] - levelGain[b.level]) / cost[b.rare][b.level], 10) / 
+				Math.log(10) + 15).toFixed(2);
 			debugger;
-			$('#' + id +" p.benefit").text("每1金升级收益:" + 
-				((levelGain[b.level+1] - levelGain[b.level]) / cost[b.rare][b.level + 1]).toExponential(1)
-			);
+			$('#' + id +" p.benefit").text("每金升级收益:" + score);
 		} else {
 			$('#' + id +" p.benefit").text("已满级");
 		}
