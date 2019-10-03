@@ -1,3 +1,5 @@
+var resultBuilding, resultDetail;
+
 var calculateBasic = function(name, gain, level, star){
 	if(!buildCfg.hasOwnProperty(name)) {
 		return 0;
@@ -40,10 +42,9 @@ var calculateBuff = function(building, mission, policy, collection){
 		Object.keys(b.benefit).forEach(function(key){
 			// hard code for 空中别墅 电厂
 			var benefit = b.benefit[key] * b.star;
-			if (key === "在线全局") {
-				if (b.hasOwnProperty('enhance') && b.star > 1) {
-					benefit += b.enhance * (b.star - 1);
-				}
+			
+			if (b.hasOwnProperty('enhance') && b.enhance.hasOwnProperty(key)) {
+				benefit += b.enhance[key] * (b.star - 1);
 			}
 			add(result['building'], key, benefit);
 		});
@@ -84,6 +85,8 @@ var calculateAllValue = function(building, mission, policy, collection, homeligh
     return resultValue;
 };
 
+// for global access
+var avaiablePolicy, avaiableMission, avaiableCollection, homelight, online;
 
 $("#calculation").on("click", function(){
 	loadConfigFromPage();
@@ -96,11 +99,11 @@ $("#calculation").on("click", function(){
 		"住宅": residenceB,
 	};
 
-	var avaiablePolicy = new Array();
-	var avaiableMission = new Array();
-	var avaiableCollection = new Array();
-	var homelight = configJson.homelight / 100;
-	var online = configJson.online;
+	avaiablePolicy = new Array();
+	avaiableMission = new Array();
+	avaiableCollection = new Array();
+	homelight = configJson.homelight / 100;
+	online = configJson.online;
 
 	configJson.building.forEach(function(b) {
 		var name = b.name;
@@ -139,9 +142,7 @@ $("#calculation").on("click", function(){
 		});
 	})
 
-	var maxValue = 0;
-	var resltBuilding, resultDetail;
-	var resultCnt = 0;
+	var maxValue = 0; resultCnt = 0;
 
 	getCombinations(industryB, 3).forEach(function(ib){
 		getCombinations(commerceB, 3).forEach(function(cb){
@@ -161,55 +162,82 @@ $("#calculation").on("click", function(){
 	var buff = calculateBuff(resultBuilding, avaiableMission, avaiablePolicy, avaiableCollection, homelight, online);
 
 	
+	updateUI(buff, maxValue, resultCnt, resultBuilding, resultDetail);
+});
+
+var updateUI = function(buff, value, cnt, building, detail) {
 	var f = function(number) {
-		if (number < 1e+3) {
-			return number.toFixed(0);
-		}
-		if (number < 1e+6) {
-			return (number/1e+3).toFixed(2) + "K";
-		}
-		if (number < 1e+9) {
-			return (number/1e+6).toFixed(2) + "M";
-		}
-		if (number < 1e+12) {
-			return (number/1e+9).toFixed(2) + "B";
-		}
-		if (number < 1e+15) {
-			return (number/1e+12).toFixed(2) + "T";
-		}
-		return (number/1e+15).toFixed(2) + "aa";
+		var unit = ["", "K", "M", "B", "T",
+			"aa", "bb", "cc", "dd", "ee", 
+			"ff", "gg"];
+		var index = 0;
+		while(Math.pow(10, index*3 + 3) < number && index < unit.length - 1) {
+			index += 1;
+		} 
+		return (number/Math.pow(10, index*3)).toFixed(2) + unit[index];
 	}
 
 	var row = 0, col = 0;
-	var last_type;
-	resultBuilding.forEach(function(b, i){
-		if (last_type != b.type) {
-			row += 1;
-			col = 1;
-			last_type = b.type;
-		} else {
-			col += 1;
-		}
-		var id = "r" + row + "c" + col;
-		$("#" + id +" p.title").text(b.name);
-		$("#" + id +" p.detail").text("Lv." + parseInt(b.level) + "⭐" + parseInt(b.star));
-		$("#" + id +" p.base").text("基础:" + f(resultDetail[i].basevalue));
-		$("#" + id +" p.total").text("全部:" + f(resultDetail[i].totalvalue));
-		if (b.level < levelLimit) {
-			debugger;
-			$('#' + id +" p.benefit").text("每金升级收益:" + 
-				((levelGain[b.level+1] - levelGain[b.level]) / cost[b.rare][b.level + 1]).toExponential(1)
-			);
-		} else {
-			$('#' + id +" p.benefit").text("已满级");
-		}
+
+	// clean the last output
+	$(".itemblock").find("td p").each(function(){
+		$(this).text("");
+	});
+	$(".itemblock").find("td benefit").each(function(){
+		$(this).text("");
+		$(this).css("display", "none");
+		$(this).css('background-color', '')
 	});
 
-	$("#result").text("预计总收入为：" + f(maxValue) + "(总遍历"+ resultCnt + "个结果)");
+	var map = {"工业": 0, "商业": 0, "住宅": 0};
+	var maxScore = 0;
+	var maxId;
+
+	building.forEach(function(b, i){
+		var row = Object.keys(map).indexOf(b.type) + 1;
+		var col = ++map[b.type];
+		var id = "r" + row + "c" + col;
+
+		$("#" + id +" p.title").text(b.name);
+		$("#" + id +" p.detail").text("Lv." + parseInt(b.level) + "⭐" + parseInt(b.star));
+		$("#" + id +" p.base").text("基础:" + f(detail[i].basevalue));
+		$("#" + id +" p.total").text("全部:" + f(detail[i].totalvalue));
+		
+		var mult = detail[i].totalvalue/detail[i].basevalue;
+
+		var benefitButton = $('#' + id +" button.benefit");
+		if (b.level < levelLimit) {
+			var incr = calculateBasic(b.name, b.offset, b.level + 1, b.star) - 
+				calculateBasic(b.name, b.offset, b.level, b.star);
+			var score = (Math.log(incr * mult / cost[b.rare][b.level], 10) / 
+				Math.log(10) + 12).toFixed(2);
+			if (maxScore < score) {
+				maxScore = score;
+				maxId = id;
+			}
+			benefitButton.text("升级收益:" + score);
+		} else {
+			benefitButton.text("已满级");
+		}
+		benefitButton.css("display", "inline-flex");
+		benefitButton.css("background-color", "");
+		benefitButton.off('click').on('click', function() {
+			b.level++;
+			// recalculate detail
+			var result = calculateAllValue(building, avaiableMission, avaiablePolicy, avaiableCollection, homelight, online);
+			var buff = calculateBuff(building, avaiableMission, avaiablePolicy, avaiableCollection, homelight, online);
+			detail = result.detail;
+			updateUI(buff, result.value, cnt, building, detail);
+		});
+	});
+
+	$('#' + maxId +" button.benefit").css('background-color', 'red');
+
+	$("#result").text("预计总收入为：" + f(value) + "(总遍历"+ cnt + "个结果)");
 	
 	var supply_rate = parseInt(((buff['building']['供货']? buff['building']['供货']: 0) + 
 		(buff['mission']['供货']? buff['mission']['供货']: 0) +
 		(buff['policy']['供货']? buff['policy']['供货']: 0) + 
 		(buff['collection']['供货']? buff['collection']['供货']: 0)) * 100);
 	$("#supply").text("供货加成为：" + supply_rate + "%");
-});
+};

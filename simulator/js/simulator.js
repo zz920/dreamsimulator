@@ -290,13 +290,22 @@ function loadConfigFromPage() {
     configJson.online = $("#online").is(':checked');
 };
 
-$(function loadConfigFile() {
+
+function loadConfigFile() {
 	var config = local_load("config");
 
 	if (config) {
 		// use cache to overwrite the configJson
 		configJson = config;
 	}
+
+	//clean all existing ones
+
+	$.each(['buildingblocks', 'missionblocks', 'policyblocks', 'collectionblocks'], function(i, v){
+		while ($("#" + v + " tr").length > 2) {
+			$("#" + v + " tr").eq(-2).remove();
+		}
+	});
 
 	$.each(configJson.building, function(i, obj){
 		addBuilding(obj.name, obj.star, obj.level);
@@ -315,7 +324,8 @@ $(function loadConfigFile() {
 	});
 
 	$("#homelight input").val(configJson.homelight);
-});
+}
+$(loadConfigFile);
 
 var storage = window.localStorage;
 
@@ -329,7 +339,20 @@ function local_load(name) {
 	return JSON.parse(storage.getItem(name));
 };
 
+// delete local storage
+function local_delete(name) {
+	storage.removeItem(name);
+};
+
 $("#save").on("click", function(){
 	loadConfigFromPage();
 	local_save("config", configJson);
+});
+
+$("#delete").on("click", function(){
+	if (confirm("确认删除当前的配置并使用默认配置(config.json)吗？")) {
+		local_delete("config");
+		// load default config
+		loadConfigFile();
+	}
 });

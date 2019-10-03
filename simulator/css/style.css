@@ -78,6 +78,10 @@ main {
     padding-left: 3px;
 }
 
+.itemblock button {
+    display: none;
+}
+
 .buffset {
     padding-bottom: 50px;
 }
@@ -96,7 +100,7 @@ main {
     width: 20px;
 }
 
-.saveButton {
+.config button{
     height: 30px;
     width: 120px;
 }
@@ -120,7 +124,7 @@ main {
 }
 
 .rank {
-    width:  40px;
+    width:  70px;
     height:  23px;
     padding: 0px;
     border: 0px;
