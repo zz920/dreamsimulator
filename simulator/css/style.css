@@ -96,12 +96,7 @@ main {
     width: 20px;
 }
 
-.saveButton {
-    height: 30px;
-    width: 120px;
-}
-
-.deleteButton {
+.config button{
     height: 30px;
     width: 120px;
 }

@@ -215,6 +215,9 @@ $("#calculation").on("click", function(){
 		} else {
 			$('#' + id +" p.benefit").text("已满级");
 		}
+
+		// reset the color
+		$('#' + id +" p.benefit").css('background-color', '');
 	});
 
 	$('#' + maxId +" p.benefit").css('background-color', 'red');
