@@ -86,7 +86,6 @@ var calculateAllValue = function(building, mission, policy, collection, homeligh
 
 
 $("#calculation").on("click", function(){
-	debugger;
 	loadConfigFromPage();
 	var industryB = new Array();
 	var commerceB = new Array();
@@ -177,7 +176,6 @@ $("#calculation").on("click", function(){
 	var last_type;
 
 	// clean the last output
-	debugger;
 	$(".itemblocks").find("td p").each(function(){
 		$(this).text("");
 	});
@@ -201,8 +199,8 @@ $("#calculation").on("click", function(){
 		if (b.level < levelLimit) {
 			var score = (Math.log((levelGain[b.level+1] - levelGain[b.level]) / cost[b.rare][b.level], 10) / 
 				Math.log(10) + 15).toFixed(2);
-			debugger;
 			$('#' + id +" p.benefit").text("每金升级收益:" + score);
+
 		} else {
 			$('#' + id +" p.benefit").text("已满级");
 		}
